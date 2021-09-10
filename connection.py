@@ -1,5 +1,5 @@
 
-import psycopg2 #postgres connection
+import psycopg2                 # for postgres connection
 
 
 class dbConnection : 
@@ -44,7 +44,7 @@ class dbConnection :
             # create a cursor
             cur = self.conn.cursor()
             
-        # execute a statement
+            # execute a statement
             print('PostgreSQL database version:')
             cur.execute('SELECT version()')
 
@@ -52,21 +52,37 @@ class dbConnection :
             db_version = cur.fetchone()
             print(db_version)
         
-        # close the communication with the PostgreSQL
+            # close the communication with the PostgreSQL
             cur.close()
+
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
 
-        finally:
-            if self.conn is not None:
-                self.conn.close()
-                print('Database connection closed.')
+    #return connection object
+    def getConnection(self):
+
+        return self.conn
+
+    # closing the connection if exists
+    def closeConnection(self):        
+        if self.conn is not None:
+            self.conn.close()
+            print('Database connection closed.')
+
+    def __del__(self):
+        
+        self.closeConnection()
+        pass
 
 
+#This is this file specific can be used for unit testing
 if __name__ == '__main__':
     
     connObj = dbConnection()
     connObj.getDbDetails()
     connObj.connect()
+    connObj.closeConnection()
 
     print("\n**Thanks!**\n")
+
+# *** TESTED OK! ***
