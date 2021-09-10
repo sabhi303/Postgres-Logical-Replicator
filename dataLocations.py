@@ -36,18 +36,18 @@ class postgreDataLocations :
         # Assuming that the file is always name 'pg_hba.conf'
         self.hbaConfFilelocation = self.dataDirectory + "pg_hba.conf"
         
-        print("HBA Conf File Location : ", self.hbaConfFilelocation)
+        # print("HBA Conf File Location : ", self.hbaConfFilelocation)
 
-        # return self.hbaConfFilelocation
+        return self.hbaConfFilelocation
 
     def getSqlConfFile(self) :
         
         # Assuming that the file is always name 'postgresql.conf'
         self.sqlConfFileLocation = self.dataDirectory + "postgresql.conf"
         
-        print("SQL Conf File Location : ", self.sqlConfFileLocation)
+        # print("SQL Conf File Location : ", self.sqlConfFileLocation)
 
-        # return self.hbaConfFilelocations
+        return self.sqlConfFileLocation
 
     # destructor
     def __del__(self):
@@ -73,9 +73,6 @@ if __name__ == '__main__':
     locationGetter.getDataDirectory()
     locationGetter.getHbaConfFile()
     locationGetter.getSqlConfFile()
-
-    # Closing Database Connection
-    connObj.closeConnection()
 
     print("\n**Thanks!**\n")
 

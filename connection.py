@@ -81,7 +81,6 @@ if __name__ == '__main__':
     connObj = dbConnection()
     connObj.getDbDetails()
     connObj.connect()
-    connObj.closeConnection()
 
     print("\n**Thanks!**\n")
 
