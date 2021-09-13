@@ -1,0 +1,4 @@
+//TO-DO
+
+1. Refer : https://www.postgresql.org/docs/9.4/sql-altersystem.html
+   This can be done for setting wal_level instead of editing that file directly...
