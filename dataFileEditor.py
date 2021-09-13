@@ -8,22 +8,6 @@ import shutil
 #import os for deleting and renaming
 import os
 
-#importing the regex module
-import re
-
-#defining the replace method
-def replace(filePath, text, subs, flags=0):
-    with open(filePath, "r+") as file:
-        #read the file contents
-        file_contents = file.read()
-        text_pattern = re.compile(re.escape(text), flags)
-        file_contents = text_pattern.sub(subs, file_contents)
-        file.seek(0)
-        file.truncate()
-        file.write(file_contents)
-
-
-
 
 class dataFileEditor :
 
@@ -92,26 +76,37 @@ class dataFileEditor :
 
         try :
 
-            file_path=sqllocation
-            text="#wal_level ="
-            subs="wal_level = logical #"
+            #Setting wal_level to logical via query
 
-            # calling the replace method
-            replace(file_path, text, subs)
 
-            text="wal_level ="
-            subs="wal_level = logical #"
+            query = "ALTER SYSTEM SET wal_level = logical"
 
-            # calling the replace method
-            replace(file_path, text, subs)
+            # create a cursor
+            cur = self.conn.cursor()
+
+            # Commiting previous changes
+            cur.execute("COMMIT")
+            
+            # execute a statement
+            cur.execute(query)
+
+            # Checking success status
+            if "ALTER" in cur.statusmessage:
+                
+                cur.execute("COMMIT")
+
+                if "COMMIT" in cur.statusmessage:
+
+                        print("Changed wal_level to logical!\n\n***Restart your Database to apply the changes !***\n\n")
+                else:
+                    print("wal_level updation failed at COMMIT..\n Something went wrong with database while committing..\n")
+
+
+            # close the communication with the PostgreSQL
+            cur.close()
 
         except Exception as error :
             
-            # deleting old file if exists in case of error
-            if os.path.exists(sqllocation):
-                os.remove(sqllocation)
-                os.rename(sqllocation+".bkp", sqllocation)
-
             print(error)
             print("Something went write while writing in the file, please try again")
 

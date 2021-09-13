@@ -1,4 +1,23 @@
+
+
+
+
 //TO-DO
 
 1. Refer : https://www.postgresql.org/docs/9.4/sql-altersystem.html
    This can be done for setting wal_level instead of editing that file directly...
+
+
+// Work-around
+1. Issue : database restart
+   - Installation's bin path can be taken from user and then can be restarted 
+     as data directory can anyways be taken from postgresql query or already implemeted function
+
+
+//To-worry
+
+- While expanding
+   1. Currently checking query status with status_message ...
+      This needs to be changes as they may change This
+
+
