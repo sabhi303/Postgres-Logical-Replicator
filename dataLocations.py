@@ -13,6 +13,9 @@ class postgreDataLocations :
     def __init__(self, conn):
         self.conn = conn
 
+        #Getting data directory
+        self.getDataDirectory()
+
     def getDataDirectory(self) :
 
         # create a cursor
@@ -24,7 +27,7 @@ class postgreDataLocations :
 
         # get the PostgreSQL database's data directory
         # retruns tuple so fetch the first element
-        self.dataDirectory = cur.fetchone()[0]
+        self.dataDirectory = cur.fetchone()[0]+"/"
         print(self.dataDirectory)
     
         # close the communication with the PostgreSQL

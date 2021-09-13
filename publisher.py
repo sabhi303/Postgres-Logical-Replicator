@@ -10,12 +10,12 @@
 # Meaning,
 #       1.  psql # CREATE ROLE replicator REPLICATION LOGIN PASSWORD 'Mandakini@4'; ---done
 
-#       2.  Edit pg_hba.conf file & make user to eleble for REPLICATION
+#       2.  Edit pg_hba.conf file & make user to eleble for REPLICATION             ---done
 #            Add line : 
 #           host    all replicator localhost    md5
-#       3. set wal level in conf file
+#       3. set wal level in conf file                                           ---done
 #           wal_level = logical
-#       4. psql # CREATE PUBLICATION classpub FOR TABLE classroom;
+#       4. psql # CREATE PUBLICATION classpub FOR TABLE classroom;              
 #           COULD HAVE DONE FOR ALL TABLES AND STUFF
 #       5. psql # GRANT ALL ON classroom TO replicator;
 
