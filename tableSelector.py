@@ -60,7 +60,8 @@ class tableSelector:
         
         # Display all tables..
         self.displayTables()
-
+        
+        # Give indexes over here
         selectedTables = input("Enter table names to replicate (space seperated) [ All tables ] =>\n")
         
         # if user provides table names
