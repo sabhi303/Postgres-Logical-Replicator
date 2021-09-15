@@ -28,10 +28,11 @@ class userCreator :
 
         query = "CREATE ROLE " + self.userName + " REPLICATION LOGIN PASSWORD '" + self.userPass +"'"
 
-        # init cursor
-        cur = self.conn.cursor()
-
+        
         try : 
+            # init cursor
+            cur = self.conn.cursor()
+
             # execute query
             cur.execute(query)
 
@@ -50,11 +51,49 @@ class userCreator :
             print(error)
             print("User creation Failed! \nTry again with different username..\n")
 
-            # close cursor
-        cur.close()
 
-        return self.userName or ""
+        finally:
+            # close cursor
+            cur.close()
+
+            return self.userName or ""
+
+    # give user permissions
+    def setPermissions(self, tablesList):
         
+        query = "GRANT ALL ON" + tablesList + " TO " + self.userName
+
+        # In case of all tables
+        # query = "alter default privileges in schema public grant all on tables to " + self.userName
+
+        try : 
+            # init cursor
+            cur = self.conn.cursor()
+
+            # execute query
+            cur.execute(query)
+
+            # do exception handling over this
+            if "GRANT" in cur.statusmessage:
+                
+                # this is not needed ig == remove me
+                cur.execute("COMMIT")
+
+                if "COMMIT" in cur.statusmessage:
+
+                        print("User creation Successful ! ")
+                else:
+                    print("Granting permissions Failed at COMMIT..\n Something went wrong with database while committing..\n")
+
+        except Exception as error :
+            print(error)
+            print("User creation Failed! \nTry again with different username..\n")
+
+
+        finally:
+            # close cursor
+            cur.close()
+
     # destructor 
     def __del__(self):        
         pass

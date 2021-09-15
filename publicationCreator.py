@@ -9,9 +9,10 @@ import random, string
 class publicationCreator:
 
     conn: None
-    pubName : str
+    publicationName : str
 
     def __init__(self, conn) -> None:
+        
         self.conn = conn
         pass
 
@@ -26,10 +27,10 @@ class publicationCreator:
 
         # get publication name from user or generate random
         # for a time being, lets make a random one
-        self.pubName = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+        self.publicationName = 'P'+''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(9))
         
 
-        return "CREATE PUBLICATION " + self.pubName + "pub FOR TABLE " + tableList
+        return "CREATE PUBLICATION " + self.publicationName + "pub FOR TABLE " + tableList
 
 
     def generatePub(self):
@@ -58,14 +59,21 @@ class publicationCreator:
                     print("Publication creation failed while committing!\n")
 
 
-            # closing the cursor
-            cur.close()
+           
         
         except Exception as error :
             
             print(error)
             print("Something went wrong!\nPlease try again..\n\n")
-        
+
+        # return publication name
+        finally :
+            
+            # closing the cursor
+            cur.close()
+
+            return self.publicationName
+    
 
     # destructor 
     def __del__(self):        
