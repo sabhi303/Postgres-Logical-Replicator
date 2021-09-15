@@ -2,10 +2,14 @@
 # Class for publication creator
 from tableSelector import tableSelector
 
+# for random string generator
+import random, string
+
 
 class publicationCreator:
 
     conn: None
+    pubName : str
 
     def __init__(self, conn) -> None:
         self.conn = conn
@@ -22,8 +26,11 @@ class publicationCreator:
 
         # get publication name from user or generate random
         # for a time being, lets make a random one
+        self.pubName = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+        
 
-        return "CREATE PUBLICATION " + tableList[0] + "pub FOR TABLE " + tableList
+        return "CREATE PUBLICATION " + self.pubName + "pub FOR TABLE " + tableList
+
 
     def generatePub(self):
 
@@ -80,7 +87,7 @@ if __name__ == '__main__':
     # Now Objects of this class
     generateObj = publicationCreator(connObj.getConnection())
     generateObj.generatePub()
-    
+     
     print("\n**Thanks!**\n")
 
 # *** TESTED OK! ***
