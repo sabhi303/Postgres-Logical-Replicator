@@ -9,6 +9,13 @@
 
 2. update create publication model ==> do something interesting
 
+// For menu
+   
+   1. Write class specifics menus like:
+      1. Main Menu -- main.py
+      2. Publishers Menu
+      3. Subscribers Menu
+
 // Work-around
 1. Issue : database restart
    - Installation's bin path can be taken from user and then can be restarted 
