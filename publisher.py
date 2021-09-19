@@ -82,6 +82,7 @@ class publisher :
 
 
 # I may not need this bt jaane do abhi seperate handler likhne ke alava let it be
+'''
 from connection import dbConnection
 
 if __name__ == '__main__':
@@ -100,4 +101,45 @@ if __name__ == '__main__':
 
     print("\n**Thanks!**\n")
 
+'''
+
 # *** TESTED OK! ***
+
+
+
+# Publisher Menu
+
+def publisherMenu():
+       
+    print("\n[ PUBLISHER-MENU ]\n")
+
+    switcher = {
+        1: "\n[ ADD PUBLISHER DATABASE ] ",
+        2: "\n[ CREATE PUBLICATION ROLE ] ",
+        3: "\n [ CONFIGURE PUBLICATION ] ",
+    }
+
+
+    try :
+        # handle this
+        choice = int(input("\n\t  1. Add Publisher Database \n\t  2. Create Publication Role \n\t  3. Configure Publication \n\t  4. Exit to Main Menu \nChoice\t: "))
+        
+        print("\n","="*50,"\n")
+
+        # p00r attempt 0f sw1tch case :x ...
+        if( choice < 4 and choice > 0 ):
+            print(switcher[choice])
+            
+        elif choice==4 :
+            return
+        else :
+            print("Please Enter valid choice")
+        
+        publisherMenu()
+
+    except Exception as error :
+        print ( "\n" , error , "\n")
+        print ( "Something went wrong! Please try again! \n" )
+        publisherMenu()
+
+    pass
