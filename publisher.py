@@ -35,8 +35,12 @@ class publisher :
     publisherName : str
     publicationName : str
 
-    def __init__(self, conn) -> None:
+    def __init__(self, conn = None) -> None:
         
+        self.conn = conn
+        pass
+
+    def setConn(self,conn) :
         self.conn = conn
         pass
     
@@ -105,33 +109,57 @@ if __name__ == '__main__':
 
 # *** TESTED OK! ***
 
+# For establishing connection
+from connection import dbConnection
 
+
+def addPublisherDatabase():
+
+     # Establishing Database Connection
+    connObj = dbConnection()
+    connObj.getDbDetails()
+    connObj.connect()
+    # connection object
+    return connObj.getConnection()
+
+
+
+# publisher object 
+pub = publisher()
 
 # Publisher Menu
 
 def publisherMenu():
-       
+    
+    global pub
     print("\n[ PUBLISHER-MENU ]\n")
-
-    switcher = {
-        1: "\n[ ADD PUBLISHER DATABASE ] ",
-        2: "\n[ CREATE PUBLICATION ROLE ] ",
-        3: "\n [ CONFIGURE PUBLICATION ] ",
-    }
-
-
+    
     try :
+
         # handle this
-        choice = int(input("\n\t  1. Add Publisher Database \n\t  2. Create Publication Role \n\t  3. Configure Publication \n\t  4. Exit to Main Menu \nChoice\t: "))
+        choice = int(input("\n\t  1. Configure Publisher Database \n\t  2. Create Publication Role \n\t  3. Configure Publication \n\t  4. Exit to Main Menu \nChoice\t: "))
         
         print("\n","="*50,"\n")
 
         # p00r attempt 0f sw1tch case :x ...
-        if( choice < 4 and choice > 0 ):
-            print(switcher[choice])
-            
-        elif choice==4 :
-            return
+        
+        if choice == 1 :
+            # Set the connection
+            pub.setConn(addPublisherDatabase())
+
+            print("\nPublisher database added successfully!")
+        
+        elif choice == 2 :
+            pub.createRoleForReplication()
+            pass
+
+        elif choice == 3 :
+            pub.createPublication()
+            pass
+
+        elif choice == 4 :
+            return 
+
         else :
             print("Please Enter valid choice")
         

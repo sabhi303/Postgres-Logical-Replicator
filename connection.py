@@ -69,10 +69,10 @@ class dbConnection :
             self.conn.close()
             print('Database connection closed.')
 
-    def __del__(self):
+    # def __del__(self):
         
-        self.closeConnection()
-        pass
+    #     self.closeConnection()
+    #     pass
 
 
 #This is this file specific can be used for unit testing
