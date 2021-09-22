@@ -53,7 +53,8 @@ class publisher :
         
         # self exlplanotory
         self.publisherName = uc.createRoleForReplication()
-        pass
+
+        return self.publisherName or "Something went wrong, please try again later.."
 
     # Get publisher Name
     def getPublisherName(self):
@@ -70,10 +71,12 @@ class publisher :
         pc = publicationCreator(self.conn)
         self.publicationName = pc.generatePub()
 
+        return self.publicationName or None
+
     # get publication name
     def getPublicationName(self):
 
-        return self.publicationName or "Publication isn't created!"
+        return self.publicationName or None
 
     #######################################
 
@@ -146,18 +149,21 @@ def publisherMenu():
         if choice == 1 :
             # Set the connection
             pub.setConn(addPublisherDatabase())
-
-            print("\nPublisher database added successfully!")
+            if ( pub.conn ) : print("\nPublisher database added successfully!")
+            else : "We were unable to configure the database, please try again!"
         
         elif choice == 2 :
-            pub.createRoleForReplication()
-            pass
+            # create publication role
+            if ( pub.createRoleForReplication() ) : print ( " Role : ",pub.publisherName," is created successfully!")
+            else : "Something went wrong! Please try again.."
 
         elif choice == 3 :
-            pub.createPublication()
-            pass
+            if( pub.createPublication() ) :  print ( " Publication : ",pub.publicationName," is created successfully!")
+            else : "Something went wrong! Please try again.."
+    
 
         elif choice == 4 :
+            # return to main menu
             return 
 
         else :

@@ -51,7 +51,7 @@ class tableSelector:
             
             print(error)
             print("Something went write while writing in the file, please try again")
-
+            return error
         pass
 
 
@@ -59,7 +59,8 @@ class tableSelector:
     def selectTables(self):
         
         # Display all tables..
-        self.displayTables()
+        if ( self.displayTables() ):
+            return
         
         # Give indexes over here
         selectedTables = input("Enter table names to replicate (space seperated) [ All tables ] =>\n")
