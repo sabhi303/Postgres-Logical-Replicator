@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
 
     # Now Objects of this class
-    generateObj = publicationCreator(connObj.getConnection())
+    generateObj = subscriptionCreator(connObj.getConnection())
     
     # Publisher details
     dbServer = input("Server [ localhost ] : ") or "localhost"

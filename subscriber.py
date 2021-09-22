@@ -112,6 +112,7 @@ def addSubscriberDatabase():
 
 # publisher object 
 sub = subsriber()
+pubObj = dbConnection()
 
 # Publisher Menu
 
@@ -133,7 +134,7 @@ def subscriberMenu( choice = None ):
         if choice == 1 :
             # Set the connection
             sub.setConn(addSubscriberDatabase())
-            if ( sub.conn ) : print("\Subscriber database added successfully!")
+            if ( sub.conn ) : print("\nSubscriber database added successfully!")
             else : "We were unable to configure the database, please try again!"
         
         elif choice == 2 :
@@ -145,7 +146,7 @@ def subscriberMenu( choice = None ):
             print("\n","="*50,"\n")
 
             if choice == 1 :
-                listAllUsers( sub.conn )
+                listAllUsers( sub.conn , True)
 
             elif choice == 2 : 
                 if ( sub.createRoleForReplication() ) : print ( " Role : ",sub.subscriberName," is created successfully!")
@@ -167,11 +168,38 @@ def subscriberMenu( choice = None ):
             print("\n","="*50,"\n")
 
             if choice == 1 :
-                listAllSubscriptions( sub.conn )
+                listAllSubscriptions( sub.conn , True)
                 pass
 
-            elif choice == 2 : 
-                if( sub.createSubscription() ) :  print ( " Subscription : ",sub.getSubsriptionName," is created successfully!")
+            elif choice == 2 :
+                
+                # ithe publication details ghayachet
+                            
+                # Publisher details
+                print("\nEnter Publisher Details..\n")
+
+                dbServer = input("Server [ localhost ] : ") or "localhost"
+                dbName = input("Database [ postgres ] : ") or "postgres"
+                dbPort = input("Port [ 5432 ] : ") or "5432"
+                dbUserName = input("Username [ postgres ] : ") or "postgres"
+                #Hidden kra he
+                dbPassword = input("Password : ")
+                
+
+                # list publications
+                pubObj.setDbDetails(dbServer, dbName, dbPort, dbUserName, dbPassword)
+                pubObj.connect()
+
+                print("")
+                listAllPublications(pubObj.getConnection() ,True)
+                pubs = input("Enter Publications from above list [space seperated] : ").split(" ")
+
+
+                connstr = "host={} dbname={} port={} user={} password={}".format(dbServer, dbName, dbPort, dbUserName, dbPassword)
+
+                # list publications on that server over here..
+                
+                if( sub.createSubscription(connstr, pubs) ) :  print ( " Subscription : ",sub.getSubsriptionName()," is created successfully!")
                 else : "Something went wrong! Please try again.."
                 pass
             

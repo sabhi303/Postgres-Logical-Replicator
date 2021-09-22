@@ -24,6 +24,16 @@ class dbConnection :
         #Hidden kra he
         self.dbPassword = input("Password : ")
 
+    def setDbDetails(self, dbs, dbn, dbp, dbu, dbpass):
+        
+        self.dbServer = dbs
+        self.dbName = dbn
+        self.dbPort = dbp
+        self.dbUserName = dbu
+        self.dbPassword = dbpass
+
+        pass
+
     #For Establishing connection 
     def connect(self):
         

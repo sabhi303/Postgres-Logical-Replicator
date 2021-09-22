@@ -1,5 +1,6 @@
 
 from publisher import publisherMenu
+from subscriber import subscriberMenu
 
 
 # Header -- create beutiful logo for this
@@ -53,7 +54,7 @@ def mainMenu():
 
     switcher = {
         1: publisherMenu,
-        2: "\n[ SUBSRIBER MENU ]",
+        2: subscriberMenu,
         3: help,
     }
 
