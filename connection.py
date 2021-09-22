@@ -38,7 +38,7 @@ class dbConnection :
             }
 
             # connect to the PostgreSQL server
-            print('Connecting to the PostgreSQL database...')
+            print('\nConnecting to the PostgreSQL database...\n')
             self.conn = psycopg2.connect(**connectionDetails)
             
             # create a cursor
@@ -52,6 +52,8 @@ class dbConnection :
             db_version = cur.fetchone()
             print(db_version)
         
+            print("\n ** Connection Successful ! **\n")
+
             # close the communication with the PostgreSQL
             cur.close()
 

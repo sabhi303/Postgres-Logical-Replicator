@@ -28,6 +28,8 @@ from userCreator import userCreator
 
 from publicationCreator import publicationCreator
 
+from sql import listAllUsers, listAllPublications
+
 
 class publisher :
     
@@ -132,7 +134,7 @@ pub = publisher()
 
 # Publisher Menu
 
-def publisherMenu():
+def publisherMenu( choice = None ):
     
     global pub
     print("\n[ PUBLISHER-MENU ]\n")
@@ -140,7 +142,8 @@ def publisherMenu():
     try :
 
         # handle this
-        choice = int(input("\n\t  1. Configure Publisher Database \n\t  2. Create Publication Role \n\t  3. Configure Publication \n\t  4. Exit to Main Menu \nChoice\t: "))
+        if not choice :
+            choice = int(input("\n\t  1. Configure Publisher Database \n\t  2. Create Publication Role \n\t  3. Configure Publication \n\t  4. Exit to Main Menu \nChoice\t: "))
         
         print("\n","="*50,"\n")
 
@@ -153,22 +156,59 @@ def publisherMenu():
             else : "We were unable to configure the database, please try again!"
         
         elif choice == 2 :
+           
             # create publication role
-            if ( pub.createRoleForReplication() ) : print ( " Role : ",pub.publisherName," is created successfully!")
-            else : "Something went wrong! Please try again.."
+            print("\n[ PUBLICATION ROLE CREATION ]\n")
 
+            choice = int(input("\n\t  1. List All Database roles \n\t  2. Create New Publication Role  \n\t  3. Exit to Publication Menu \nChoice\t: "))
+            print("\n","="*50,"\n")
+
+            if choice == 1 :
+                listAllUsers( pub.conn , True)
+
+            elif choice == 2 : 
+                if ( pub.createRoleForReplication() ) : print ( " Role : ",pub.publisherName," is created successfully!")
+                else : "Something went wrong! Please try again.."
+
+
+            elif choice == 3 :
+                pass
+               
+            else :
+                print("Please Enter valid choice!")
+                pass
+           
+        
         elif choice == 3 :
-            if( pub.createPublication() ) :  print ( " Publication : ",pub.publicationName," is created successfully!")
-            else : "Something went wrong! Please try again.."
-    
+            print("\n[ PUBLICATION CREATION ]\n")
+
+            choice = int(input("\n\t  1. List All Publications \n\t  2. Create New Publication  \n\t  3. Exit to Publication Menu \nChoice\t: "))
+            print("\n","="*50,"\n")
+
+            if choice == 1 :
+                listAllPublications( pub.conn , True)
+                pass
+
+            elif choice == 2 : 
+                if( pub.createPublication() ) :  print ( " Publication : ",pub.publicationName," is created successfully!")
+                else : "Something went wrong! Please try again.."
+                pass
+            
+            elif choice == 3 :
+                pass
+
+            else :
+                print("Please Enter valid choice!")
+                pass
 
         elif choice == 4 :
             # return to main menu
             return 
 
         else :
-            print("Please Enter valid choice")
+            print("Please Enter valid choice!")
         
+        # Loop instead of this to optimize... and adjust menu accordingly
         publisherMenu()
 
     except Exception as error :

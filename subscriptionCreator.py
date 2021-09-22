@@ -6,7 +6,7 @@ from tableSelector import tableSelector
 import random, string
 
 
-class publicationCreator:
+class subscriptionCreator:
 
     conn: None
     publicationName : str
@@ -17,24 +17,29 @@ class publicationCreator:
         pass
 
 
-    def queryGenerator(self):
-
-        # get required table names from user
-        ts = tableSelector(self.conn)
-        tableList =  ts.selectTables()
+    def queryGenerator(self, connectionString, publicationName):
 
 
         # get publication name from user or generate random
         # for a time being, lets make a random one
-        self.publicationName = 'P'+''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(9))
+        self.publicationName = 'S'+''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(9))
         
+        '''
+        CREATE SUBSCRIPTION mysub
+         CONNECTION 'host=192.168.1.50 port=5432 user=foo dbname=foodb'
+        PUBLICATION mypublication, insert_only;
+        '''
 
-        return "CREATE PUBLICATION " + self.publicationName + "pub FOR " + tableList
+        ret =  "CREATE SUBSCRIPTION " + self.publicationName + " CONNECTION '" + connectionString
+        ret += "' PUBLICATION "
+        for pub in publicationName:
+            ret += pub + " "
+        
+        return ret
 
 
-    def generatePub(self):
-
-        query = self.queryGenerator()
+    def generateSub(self, connectionString, pubNames):
+        query = self.queryGenerator( connectionString, pubNames)
         
         try :
             # create a cursor
@@ -53,9 +58,9 @@ class publicationCreator:
 
                 if "COMMIT" in cur.statusmessage:
 
-                        print("Publication created!")
+                        print("Subscription created!")
                 else:
-                    print("Publication creation failed while committing!\n")
+                    print("Subscription creation failed while committing!\n")
 
 
            
@@ -93,7 +98,24 @@ if __name__ == '__main__':
 
     # Now Objects of this class
     generateObj = publicationCreator(connObj.getConnection())
-    generateObj.generatePub()
+    
+    # Publisher details
+    dbServer = input("Server [ localhost ] : ") or "localhost"
+    dbName = input("Database [ postgres ] : ") or "postgres"
+    dbPort = input("Port [ 5432 ] : ") or "5432"
+    dbUserName = input("Username [ postgres ] : ") or "postgres"
+    #Hidden kra he
+    dbPassword = input("Password : ")
+    
+    '''
+        CREATE SUBSCRIPTION mysub
+         CONNECTION 'host=192.168.1.50 port=5432 user=foo dbname=foodb'
+        PUBLICATION mypublication, insert_only;
+    '''
+
+    connstr = "host={} dbname={} port={} user={} password={}".format(dbServer, dbName, dbPort, dbUserName, dbPassword)
+    
+    generateObj.generateSub(connstr, ["puzcimnn93pub"])
      
     print("\n**Thanks!**\n")
 

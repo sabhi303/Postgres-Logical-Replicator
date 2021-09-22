@@ -63,14 +63,14 @@ class tableSelector:
             return
         
         # Give indexes over here
-        selectedTables = input("Enter table names to replicate (space seperated) [ All tables ] =>\n")
+        selectedTables = input("Enter table names to replicate (space seperated) [ All tables ] =>\n") or False
         
         # if user provides table names
         if selectedTables :
             # seperate the list  by space 
-            selectedTables = selectedTables.split(" ")
+            selectedTables = "TABLE " +  ", ".join(selectedTables.split(" "))
         else :
-            selectedTables = self.allTables
+            selectedTables = "ALL TABLES"
 
         return selectedTables
 
