@@ -72,7 +72,7 @@ def listAllSubscriptions(conn, display = False):
             
             if display : 
                 print("\n[ SUBSCRIPTIONS ]\n")
-                print("Subscription\t\tEnabled?\tOwnerID")
+                print("Publication\t\tEnabled?\tOwnerID")
                 print(len("Subscription             All tables?     OwnerID") * "=")
 
                 for row in res: 
